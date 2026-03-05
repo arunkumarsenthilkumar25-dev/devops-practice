@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_IMAGE = "arunabi25/devops-website"
+    }
+
     stages {
 
         stage('Clone Code') {
@@ -11,7 +15,13 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t devops-website .'
+                sh 'docker build -t $DOCKER_IMAGE .'
+            }
+        }
+
+        stage('Push to DockerHub') {
+            steps {
+                sh 'docker push $DOCKER_IMAGE'
             }
         }
 
@@ -22,9 +32,9 @@ pipeline {
             }
         }
 
-        stage('Run Container') {
+        stage('Run New Container') {
             steps {
-                sh 'docker run -d -p 80:80 --name devops-container devops-website'
+                sh 'docker run -d -p 80:80 --name devops-container $DOCKER_IMAGE'
             }
         }
 
