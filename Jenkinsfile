@@ -5,7 +5,7 @@ pipeline {
 
         stage('Clone Code') {
             steps {
-                git 'https://github.com/arunkumarsenthilkumar25-dev/devops-ec2-project.git'
+                git branch: 'main', url: 'https://github.com/arunkumarsenthilkumar25-dev/devops-practice.git'
             }
         }
 
